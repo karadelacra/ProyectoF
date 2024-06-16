@@ -1,0 +1,18 @@
+{
+    "id": 17,
+    "name": "carnitas",
+    "types": [{
+            "slot": 1,
+            "type": {
+                "name": "main"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "mexican"
+            }
+        }
+    ],
+    "image": "https://example.com/images/carnitas.png"
+}

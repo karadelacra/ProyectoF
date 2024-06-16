@@ -1,0 +1,18 @@
+{
+    "id": 5,
+    "name": "chiles en nogada",
+    "types": [{
+            "slot": 1,
+            "type": {
+                "name": "main"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "mexican"
+            }
+        }
+    ],
+    "image": "https://example.com/images/chiles_en_nogada.png"
+}

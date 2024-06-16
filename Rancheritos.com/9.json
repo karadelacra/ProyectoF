@@ -1,0 +1,18 @@
+{
+    "id": 9,
+    "name": "guacamole",
+    "types": [{
+            "slot": 1,
+            "type": {
+                "name": "side"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "mexican"
+            }
+        }
+    ],
+    "image": "https://example.com/images/guacamole.png"
+}

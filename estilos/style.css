@@ -5,7 +5,7 @@
 
 body {
     background: #efefbb;
-    background: linear-gradient(to right, #c70000, #ffff00);
+    background: linear-gradient(to right, #1e00ff, #ffff00, #ff0000);
     font-family: 'Lato', sans-serif;
     display: flex;
     flex-direction: column;
@@ -34,6 +34,7 @@ h1 {
     margin: 10px;
     padding: 20px;
     text-align: center;
+    width: 200px;
 }
 
 .pokemon .img-container {
@@ -41,12 +42,16 @@ h1 {
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    text-align: center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 .pokemon .img-container img {
-    max-width: 90%;
-    margin-top: 20px;
+    width: 100%;
+    height: auto;
 }
 
 .pokemon .info {
