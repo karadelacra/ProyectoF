@@ -32,13 +32,15 @@ const createPokemonCard = (pokemon) => {
     const color = colors[type]
 
     pokemonEl.style.backgroundColor = color
+    const phoneNumber = generatePhoneNumber()
 
     const pokemonInnerHTML = `
     <div class="img-container">
         <img src="${pokemon.image}" alt="${name}">
     </div>
-    <div class="info">
-        <span class="number">#${id}</span>
+    <div class="info"> 
+        <button class="nav-link" onclick="navigator.clipboard.writeText('${phoneNumber}').then(() => alert('Copied!'))"><img src="https://img.icons8.com/ios/452/phone.png" width="15" height="15">
+        </button>
         <h3 class="name">${name}</h3>
         <small class="type">Type: <span>${type}</span> </small>
     </div>
@@ -47,6 +49,16 @@ const createPokemonCard = (pokemon) => {
     pokemonEl.innerHTML = pokemonInnerHTML
 
     poke_container.appendChild(pokemonEl)
+}
+
+
+
+
+const generatePhoneNumber = () => {
+    const areaCode = "52"
+    const middlePart = Math.floor(Math.random() * 9000) + 1000;
+    const lastPart = Math.floor(Math.random() * 9000) + 1000;
+    return `(${areaCode})55 ${middlePart}-${lastPart}`;
 }
 
 fetchPokemons()
