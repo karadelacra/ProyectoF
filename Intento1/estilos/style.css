@@ -29,7 +29,7 @@ body {
 
 .pokemon .img-container {
     background-color: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
+    border-radius: 100%;
     width: 120px;
     height: 120px;
     overflow: hidden;
@@ -44,40 +44,8 @@ body {
     height: 100px;
 }
 
-.info {
-    margin-top: 10px;
-}
-
-.info h3 {
-    margin: 0;
-}
-
 .info .type span {
     background-color: rgba(255, 255, 255, 0.7);
     padding: 2px 5px;
     border-radius: 3px;
-}
-
-@media (min-width: 576px) {
-    .poke-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 768px) {
-    .poke-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 992px) {
-    .poke-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 1200px) {
-    .poke-container {
-        grid-template-columns: repeat(5, 1fr);
-    }
 }
