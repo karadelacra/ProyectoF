@@ -18,12 +18,12 @@ if ($result->num_rows > 0) {
     $_SESSION['username'] = $usernameOrEmail;
 
     // Redirigir a otra página después del inicio de sesión exitoso
-    header("Location: index.html");
+    header("Location: /index.html");
     exit;
 } else {
     // Usuario no encontrado, redirigir de nuevo a la página de inicio de sesión con un mensaje de error
     $_SESSION['login_error'] = "Usuario o contraseña incorrectos";
-    header("Location: signin.php");
+    header("Location: /Signin.html");
     exit;
 }
 
