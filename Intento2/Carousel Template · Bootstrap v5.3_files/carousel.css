@@ -1,46 +1,62 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
+
+
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  color: rgb(var(--bs-tertiary-color-rgb));
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: rgb(var(--bs-tertiary-color-rgb));
 }
 
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
+
 /* Carousel base class */
+
 .carousel {
-  margin-bottom: 4rem;
-}
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  bottom: 3rem;
-  z-index: 10;
+    margin-bottom: 4rem;
 }
 
+
+/* Since positioning the image, we need to help out the caption */
+
+.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+}
+
+
 /* Declare heights because of positioning of img element */
+
 .carousel-item {
-  height: 32rem;
+    height: 32rem;
 }
 
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
+
 /* Center align the text within the three columns below the carousel */
+
 .marketing .col-lg-4 {
-  margin-bottom: 1.5rem;
-  text-align: center;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
+
+
 /* rtl:begin:ignore */
+
 .marketing .col-lg-4 p {
-  margin-right: .75rem;
-  margin-left: .75rem;
+    margin-right: .75rem;
+    margin-left: .75rem;
 }
+
+
 /* rtl:end:ignore */
 
 
@@ -48,35 +64,295 @@ body {
 ------------------------- */
 
 .featurette-divider {
-  margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+    margin: 5rem 0;
+    /* Space out the Bootstrap <hr> more */
 }
+
 
 /* Thin out the marketing headings */
+
+
 /* rtl:begin:remove */
+
 .featurette-heading {
-  letter-spacing: -.05rem;
+    letter-spacing: -.05rem;
 }
 
+
 /* rtl:end:remove */
+
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
 @media (min-width: 40em) {
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 1.25rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-
-  .featurette-heading {
-    font-size: 50px;
-  }
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+    .featurette-heading {
+        font-size: 50px;
+    }
 }
 
 @media (min-width: 62em) {
-  .featurette-heading {
-    margin-top: 7rem;
-  }
+    .featurette-heading {
+        margin-top: 7rem;
+    }
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.current-rating {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: gold;
+}
+
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 2rem;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 0 0.1rem;
+    transition: color 0.2s ease;
+    text-shadow: 0 0 1px black;
+    /* Agrega un contorno negro a las estrellas */
+}
+
+.star-rating input[type="radio"]:checked~label {
+    color: gold;
+}
+
+.star-rating label:hover,
+.star-rating label:hover~label {
+    color: gold;
+}
+
+.star-rating.disabled label {
+    cursor: not-allowed;
+}
+
+.rating-fill {
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 0 1px black;
+    /* Agrega un contorno negro a las estrellas llenas */
+}
+
+.rating-fill::before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: gold;
+    white-space: nowrap;
+    pointer-events: none;
+    text-shadow: 0 0 1px black;
+    /* Agrega un contorno negro a las estrellas llenas */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 30px;
+    /* Mínimo de 30 px desde la parte superior */
+}
+
+.modal-content {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    padding: 20px;
+    border: 1px solid #888;
+    width: auto;
+    max-width: 90%;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    min-height: 100px;
+    /* Altura mínima */
+    max-height: 600px;
+    /* Altura máxima */
+    overflow-y: auto;
+    /* Permite el desplazamiento vertical dentro del modal */
+    overflow-x: hidden;
+    /* Fija el contenido horizontalmente */
+}
+
+.close {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: red;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 10px;
+    /* Ajusta la posición del icono de cierre */
+    right: 10px;
+    /* Ajusta la posición del icono de cierre */
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    background-color: darkred;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Dark theme styles */
+
+.dark-theme .modal-content {
+    background-color: #333;
+    color: white;
+}
+
+.dark-theme .close {
+    background-color: #444;
+}
+
+
+/* Light theme styles */
+
+.light-theme .modal-content {
+    background-color: #fefefe;
+    color: black;
+}
+
+.light-theme .close {
+    background-color: red;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    position: relative;
+}
+
+.star-rating label::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    color: gold;
+    text-shadow: 1px 1px 2px black;
+    transition: width 0.2s ease;
+    z-index: -1;
+}
+
+.star-rating input[type="radio"]:checked~label::before,
+.star-rating label:hover::before,
+.star-rating label:hover~label::before {
+    width: 100%;
+}
+
+.star-rating label:hover,
+.star-rating label:hover~label {
+    color: gold;
+    transform: scale(1.1);
+}
+
+.rating-fill {
+    position: relative;
+    display: inline-block;
+}
+
+.rating-fill::before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: gold;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.product-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.product-item img {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    border-radius: 10px;
 }
