@@ -203,123 +203,80 @@
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value=""
-                                    required="">
+                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Se requiere un nombre válido.
                                 </div>
                             </div>
-
+                    
                             <div class="col-sm-6">
                                 <label for="lastName" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="">
+                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Se requiere un apellido.
                                 </div>
                             </div>
-
+                    
                             <div class="col-12">
                                 <label for="username" class="form-label">Nombre de Usuario</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text">@</span>
-                                    <input type="text" class="form-control" id="username" placeholder="Username"
-                                        required="">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="">
                                     <div class="invalid-feedback">
                                         Este nombre de usuario ya está ocupado.
                                     </div>
                                 </div>
                             </div>
-
+                    
                             <div class="col-12">
                                 <label for="nBoleta" class="form-label">Número de boleta</label>
-                                <input type="text" class="form-control" id="nBoleta" placeholder="n° de boleta"
-                                    required="">
+                                <input type="text" class="form-control" id="nBoleta" name="nBoleta" placeholder="n° de boleta" required="">
                             </div>
-
+                    
                             <div class="col-12">
                                 <label for="email" class="form-label">Email </label>
-                                <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                    required="">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required="">
                                 <div class="invalid-feedback">
                                     Se requiere un correo electrónico.
                                 </div>
                             </div>
-
+                    
                             <div class="col-12">
                                 <label for="password" class="form-label">Contraseña </label>
-                                <input type="password" class="form-control" id="password" placeholder="password"
-                                    required="">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="password" required="">
                             </div>
-
-                            <!--<div class="col-md-5">
-                                <label for="country" class="form-label">Horario</label>
-                                <select class="form-select" id="country">
-                                <option value="Matutino">Matutino</option>
-                                 <option value="Vespertino">Vespertino</option>-->
-                            </select>
-
+                    
+                            <div class="col-md-4">
+                                <label for="horaInicio" class="form-label">Hora de llegada:</label>
+                                <input type="time" id="horaInicio" class="form-control" name="horaInicio" min="07:00" max="22:00" required />
+                                <label for="horaFin" class="form-label">Hora de salida:</label>
+                                <input type="time" id="horaFin" class="form-control" name="horaFin" min="07:00" max="22:00" required />
+                                <br>
+                                <small>Los horarios de clases son de 7am a 10pm</small>
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <label for="cc-name" class="form-label">Número de tarjeta</label><span class="text-muted">(opcional)</span>
+                                <input type="text" class="form-control" id="cc-name" name="cc-name" placeholder="16 dígitos">
+                                <small class="text-body-secondary">Ingresar una tarjeta virtual de preferencia</small>
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <label for="cc-number" class="form-label">Clabe interbancaria</label>
+                                <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder="18 dígitos">
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <label for="nTelefono" class="form-label">Número de teléfono</label>
+                                <input type="text" class="form-control" id="nTelefono" name="nTelefono" placeholder="10 dígitos">
+                            </div>
                         </div>
-
-                        <div class="col-md-4">
-                            <label for="state" class="form-label">Horario en la escuela</label>
-                            <!--<select class="form-select" id="state">
-                            <option value="ocho">8:00am - 12:00pm</option>
-                            <option value="doce">12:00pm - 4:00pm</option>
-                            <option value="cuatro">4:00pm - 8:00pm</option>-->
-                            <br>
-                            <label for="horaInicio" class="form-label">Hora de llegada:</label>
-                            <input type="time" id="horaInicio" class="form-control" name="horaInicio" min="07:00"
-                                max="22:00" required />
-                            <label for="horaFin" class="form-label">Hora de salida:</label>
-                            <input type="time" id="horaFin" class="form-control" name="horaFin" min="07:00" max="22:00"
-                                required />
-                            <br>
-                            <small>Los horarios de clases son de 7am a 10pm</small>
-
-                            </select>
-                        </div>
-
-
-                </div>
-
-                <hr class="my-5">
-
-                <h4 class="mb-3">Recepción de pagos y contacto</h4>
-
-                <!--<div class="my-3">
-                            <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="checkbox" class="form-check-input" checked="">
-                                <label class="form-check-label" for="credit">Transferencia</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="checkbox" class="form-check-input">
-                                <label class="form-check-label" for="debit">Efectivo</label>
-                            </div>
-
-                        </div>-->
-
-                <div class="row gy-3">
-                    <div class="col-md-6">
-                        <label for="cc-name" class="form-label">Número de tarjeta</label><span
-                            class="text-muted">(opcional)</span>
-                        <input type="text" class="form-control" id="cc-name" placeholder="16 dígitos">
-                        <small class="text-body-secondary">Ingresar una tarjeta virtual de preferencia</small>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="cc-number" class="form-label">Clabe interbancaria</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="18 dígitos">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="nTelefono" class="form-label">Número de teléfono</label>
-                    <input type="text" class="form-control" id="nTelefono" placeholder="10 dígitos">
-                </div>
-
-                <hr class="my-4">
-
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Registrarme</button>
-                </form>
+                    
+                        <hr class="my-5">
+                    
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Registrarme</button>
+                    </form>
+                    
             </div>
     </div>
     </main>
