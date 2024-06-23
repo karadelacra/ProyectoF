@@ -1,6 +1,6 @@
 <?php
 // Incluir archivo de conexión
-include('php/conexion.php');
+include('conexion.php');
 
 
 // Recibir datos del formulario
