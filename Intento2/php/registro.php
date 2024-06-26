@@ -1,6 +1,6 @@
 <?php
 // Incluir archivo de conexión
-include('php/conexion.php');
+include('conexion.php');
 
 
 // Recibir datos del formulario
@@ -20,10 +20,10 @@ $telefono = $_POST['nTelefono'];
 $sql = "INSERT INTO usuarios (nombre, apellido, username, num_boleta, correo, contraseña, horario_inicio, horario_fin, tarjeta, clabe_interbancaria, telefono) 
             VALUES ('$nombre', '$apellido', '$nombre_usuario', '$numero_boleta', '$correo', '$password', '$hora_inicio', '$hora_fin', '$tarjeta', '$clabe_interbancaria', '$telefono')";
 
-if ($conexion->query($sql) === TRUE) {
+if ($conn->query($sql) === TRUE) {
     echo "Registro exitoso.";
 } else {
-    echo "Error: " . $sql . "<br>" . $conexion->error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
 // Cerrar conexión
