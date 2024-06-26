@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./Carousel Template · Bootstrap v5.3_files/color-modes.js.descarga"></script>
+    <!--Para que cargue correctamente bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>FoodMatch</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+    <link rel="stylesheet" href="./Carousel Template · Bootstrap v5.3_files/css@3">
+    <link href="./Carousel Template · Bootstrap v5.3_files/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="theme-color" content="#712cf9">
+    <link rel="icon" href="imagenes/logotipo_ipn.png" type="image/png">
+    <link rel="stylesheet" href="csstodo/tarjetas.css">
+    <link rel="stylesheet" href="csstodo/initial.css">
+
+    <link href="./Carousel Template · Bootstrap v5.3_files/carousel.css" rel="stylesheet">
+    <style>
+        .custom-product-card {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            margin-bottom: 20px;
+            perspective: 1000px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .custom-card-front,
+        .custom-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .custom-card-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            background-color: var(--bs-body-bg);
+        }
+
+        .custom-card-back {
+            transform: rotateY(180deg);
+            background-color: var(--bs-secondary-bg);
+            color: var(--bs-body-color);
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-product-card.flipped .custom-card-front {
+            transform: rotateY(-180deg);
+        }
+
+        .custom-product-card.flipped .custom-card-back {
+            transform: rotateY(0deg);
+            z-index: 2;
+        }
+
+        .custom-card-img-top {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .custom-card-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            display: flex;
+            gap: 10px;
+        }
+
+        .custom-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .custom-card-content p {
+            margin: 5px 0;
+        }
+
+        .custom-card-content .btn {
+            margin-top: 10px;
+        }
+
+        .vendor-info {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .vendor-info.active {
+            display: block;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .star-rating input:checked~label,
+        .star-rating label:hover,
+        .star-rating label:hover~label {
+            color: #ffc107;
+        }
+
+        .star-rating input:checked+label:hover,
+        .star-rating input:checked~label:hover,
+        .star-rating input:checked~label:hover~label,
+        .star-rating label:hover~input:checked~label {
+            color: #ffc107;
+        }
+    </style>
+
+
+</head>
+
+<body onclick="closeAllCards(event)">
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z">
+            </path>
+        </symbol>
+        <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path
+                d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z">
+            </path>
+            <path
+                d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
+            </path>
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path
+                d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+            </path>
+        </symbol>
+    </svg>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
+            aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (light)">
+            <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+                <use href="#sun-fill"></use>
+            </svg>
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light"
+                    aria-pressed="true">
+                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                        <use href="#sun-fill"></use>
+                    </svg>Light
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                    aria-pressed="false">
+                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                        <use href="#moon-stars-fill"></use>
+                    </svg>Dark
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"
+                    aria-pressed="false">
+                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                        <use href="#circle-half"></use>
+                    </svg>Auto
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+
+    <header data-bs-theme="dark">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">
+                    <img src="imagenes/logotipo_ipn.png" alt="FoodMatch" style="width: 100px;">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Casa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Signin.html">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Vendedores">Vendedores</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit" title="Buscar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class=""
+                    aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"
+                    class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"
+                    class=""></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item" style="background-image: url(imagenes/ESCOMLAT.jpg);">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                    </svg>
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>Encuentra</h1>
+                            <p class="opacity-75">Todo lo que se te antoje.</p>
+                            <p><a class="btn btn-lg btn-primary" href="Registro.html">Registrarse</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item active" style="background-image: url(imagenes/ESCOM.jpg);">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                    </svg>
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>¿Tienes antojo?</h1>
+                            <p>Y no sabes que es lo que buscas?</p>
+                            <p><a class="btn btn-lg btn-primary" href="#">Saber más</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background-image: url(imagenes/PASILLO.jpg);">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                    </svg>
+                    <div class="container">
+                        <div class="carousel-caption text-end">
+                            <h1>No sabes cómo contactar a tu vendedor favorito?</h1>
+                            <p>Encuentralo facil aquí.</p>
+                            <p><a class="btn btn-lg btn-primary" href="#Vendedores">Vendedores</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="container marketing">
+            <!-- Three columns of text below the carousel -->
+            <h2 id="Vendedores" class="col-md-12"></h2>
+            <br>
+            <br >
+            <br>
+            <br>
+            <br >
+            <br>
+            <div class="row">
+                <div class="col-lg-4" >
+                    <div class="image-container">
+                        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" role="img"
+                            aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title></title>
+                            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                            <image href="imagenes/vale-aguas.jpg" width="140" height="140" clip-path="circle(50%)">
+                            </image>
+                            <text id="starText1" x="50%" y="130%" text-anchor="middle" font-size="24" fill="gold"
+                                style="text-shadow: 0 0 1px black;"></text>
+                        </svg>
+                        <div class="current-rating" id="currentRating1"></div>
+                    </div>
+                    <h2 class="fw-normal">Valeria</h2>
+                    <div class="star-rating" id="starRating1">
+                        <input type="radio" id="star5-1" name="rating1" value="5"><label for="star5-1"
+                            title="5 stars">&#9733;</label>
+                        <input type="radio" id="star4-1" name="rating1" value="4"><label for="star4-1"
+                            title="4 stars">&#9733;</label>
+                        <input type="radio" id="star3-1" name="rating1" value="3"><label for="star3-1"
+                            title="3 stars">&#9733;</label>
+                        <input type="radio" id="star2-1" name="rating1" value="2"><label for="star2-1"
+                            title="2 stars">&#9733;</label>
+                        <input type="radio" id="star1-1" name="rating1" value="1"><label for="star1-1"
+                            title="1 star">&#9733;</label>
+                    </div>
+                    <div>
+                        <p id="ratingResult1"></p>
+                    </div>
+                    <button id="openModalBtn1" class="openModalBtn">Ver Detalles</button>
+                </div>
+
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="image-container">
+                        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" role="img"
+                            aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title></title>
+                            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                            <image href="imagenes/andrés-caféyaguas.jpg" width="140" height="140"
+                                clip-path="circle(50%)"></image>
+                            <text id="starText2" x="50%" y="130%" text-anchor="middle" font-size="24" fill="gold"
+                                style="text-shadow: 0 0 1px black;"></text>
+                        </svg>
+                        <div class="current-rating" id="currentRating2"></div>
+                    </div>
+                    <h2 class="fw-normal">Edgar</h2>
+                    <div class="star-rating" id="starRating2">
+                        <input type="radio" id="star5-2" name="rating2" value="5"><label for="star5-2"
+                            title="5 stars">&#9733;</label>
+                        <input type="radio" id="star4-2" name="rating2" value="4"><label for="star4-2"
+                            title="4 stars">&#9733;</label>
+                        <input type="radio" id="star3-2" name="rating2" value="3"><label for="star3-2"
+                            title="3 stars">&#9733;</label>
+                        <input type="radio" id="star2-2" name="rating2" value="2"><label for="star2-2"
+                            title="2 stars">&#9733;</label>
+                        <input type="radio" id="star1-2" name="rating2" value="1"><label for="star1-2"
+                            title="1 star">&#9733;</label>
+                    </div>
+                    <div>
+                        <p id="ratingResult2"></p>
+                    </div>
+                    <button id="openModalBtn2" class="openModalBtn">Ver Detalles</button>
+                </div>
+
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="image-container">
+                        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" role="img"
+                            aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title></title>
+                            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                            <image href="imagenes/programer.jpg" width="140" height="140" clip-path="circle(50%)">
+                            </image>
+                            <text id="starText3" x="50%" y="130%" text-anchor="middle" font-size="24" fill="gold"
+                                style="text-shadow: 0 0 1px black;"></text>
+                        </svg>
+                        <div class="current-rating" id="currentRating3"></div>
+                    </div>
+                    <h2 class="fw-normal">El programador</h2>
+                    <div class="star-rating" id="starRating3">
+                        <input type="radio" id="star5-3" name="rating3" value="5"><label for="star5-3"
+                            title="5 stars">&#9733;</label>
+                        <input type="radio" id="star4-3" name="rating3" value="4"><label for="star4-3"
+                            title="4 stars">&#9733;</label>
+                        <input type="radio" id="star3-3" name="rating3" value="3"><label for="star3-3"
+                            title="3 stars">&#9733;</label>
+                        <input type="radio" id="star2-3" name="rating3" value="2"><label for="star2-3"
+                            title="2 stars">&#9733;</label>
+                        <input type="radio" id="star1-3" name="rating3" value="1"><label for="star1-3"
+                            title="1 star">&#9733;</label>
+                    </div>
+                    <div>
+                        <p id="ratingResult3"></p>
+                    </div>
+                    <button id="openModalBtn3" class="openModalBtn">Ver Detalles</button>
+                </div>
+            </div>
+            
+            <!-- START THE FEATURETTES -->
+            <hr class="featurette-divider">
+            <div class="container">
+                <div class="row" id="product-container">
+                    <!-- Productos existentes se mostrarán aquí -->
+                </div>
+                <button class="btn btn-success" onclick="addNewProduct()">Añadir Nuevo Producto</button>
+            </div> 
+            <br>    <br>
+            <div class="container" onclick="closeAllCards(event)">
+                <div id="productMatrix" class="row">
+                    <!-- Tarjeta para José Antonio -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/palomasJose.jpg" alt="Productos de José Antonio"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button" onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                        <button class="btn btn-secondary" type="button" onclick="showVendorInfo(event, 'JoseAntonioInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Palomitas de maíz</p>
+                                    <p><strong>Precio:</strong> $20</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor José Antonio -->
+                    <div id="vendorInfo" class="vendor-info">
+                        <h2>José Antonio</h2>
+                        <p>Vendedor de palomitas de maíz</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Palomitas de caramelo - $20</li>
+                            <li>Palomitas de mantequilla - $20</li>
+                            <li>Palomitas mixtas - $20</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Samuel -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/papasSam.jpg" alt="Productos de Samuel" class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button" onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button" onclick="showVendorInfo(event, 'SamuelInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Papas y dulces</p>
+                                    <p><strong>Precio:</strong> $15</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Samuel -->
+                    <div id="SamuelInfo" class="vendor-info">
+                        <h2>Samuel</h2>
+                        <p>Vendedor de papas y dulces</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Papas fritas - $15</li>
+                            <li>Pulparindos - $10</li>
+                            <li>Chocolates - $20</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Pani -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/GelatinasPani.jpg" alt="Productos de Pani"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'PaniInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Postres</p>
+                                    <p><strong>Precio:</strong> $25</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Pani -->
+                    <div id="PaniInfo" class="vendor-info">
+                        <h2>Pani</h2>
+                        <p>Vendedor de postres</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Gelatina de café - $25</li>
+                            <li>Flan napolitano - $20</li>
+                            <li>Cheesecake - $30</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Erick Domínguez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/PastelErickDominguez.jpg" alt="Productos de Erick Domínguez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'ErickDominguezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Pastel de chocolate</p>
+                                    <p><strong>Precio:</strong> $40</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Erick Domínguez -->
+                    <div id="ErickDominguezInfo" class="vendor-info">
+                        <h2>Erick Domínguez</h2>
+                        <p>Vendedor de pasteles</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Pastel de chocolate - $40</li>
+                            <li>Pastel de vainilla - $35</li>
+                            <li>Pastel de zanahoria - $45</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Armando Martinez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/BolisArmandoollos.jpg" alt="Productos de Armando Martinez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'ArmandoMartinezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Bolis de Baileys</p>
+                                    <p><strong>Precio:</strong> $30</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Armando Martinez -->
+                    <div id="ArmandoMartinezInfo" class="vendor-info">
+                        <h2>Armando Martinez</h2>
+                        <p>Vendedor de bolis</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Bolis de Baileys - $30</li>
+                            <li>Bolis de fresa - $20</li>
+                            <li>Bolis de mango - $25</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Diego Vázquez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/CanastososDiego.jpg" alt="Productos de Diego Vázquez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'DiegoVazquezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Empanadas</p>
+                                    <p><strong>Precio:</strong> $30</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Diego Vázquez -->
+                    <div id="DiegoVazquezInfo" class="vendor-info">
+                        <h2>Diego Vázquez</h2>
+                        <p>Vendedor de empanadas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Empanadas de carne - $30</li>
+                            <li>Empanadas de pollo - $25</li>
+                            <li>Empanadas de queso - $20</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Antonio Mora -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/lazagnaAntonioMora.jpg" alt="Productos de Antonio Mora"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AntonioMoraInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Lasagna</p>
+                                    <p><strong>Precio:</strong> $50</p>
+                                    <p><strong>Promociones:</strong> Descuento por Traste</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Antonio Mora -->
+                    <div id="AntonioMoraInfo" class="vendor-info">
+                        <h2>Antonio Mora</h2>
+                        <p>Vendedor de lasagna</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Lasagna de carne - $50</li>
+                            <li>Lasagna de pollo - $45</li>
+                            <li>Lasagna vegetariana - $40</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Isaac Colunga -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/GomiboingsIsaac.jpg" alt="Productos de Isaac Colunga"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'IsaacColungaInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Gomiboings</p>
+                                    <p><strong>Precio:</strong> $10</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Isaac Colunga -->
+                    <div id="IsaacColungaInfo" class="vendor-info">
+                        <h2>Isaac Colunga</h2>
+                        <p>Vendedor de gomiboings</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Gomiboings de fresa - $10</li>
+                            <li>Gomiboings de mango - $10</li>
+                            <li>Gomiboings de tamarindo - $10</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Rodrigo Rafael -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/BrochetasRodrigo.jpg" alt="Productos de Rodrigo Rafael"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'RodrigoRafaelInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Brochetas de fresa</p>
+                                    <p><strong>Precio:</strong> $20</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Rodrigo Rafael -->
+                    <div id="RodrigoRafaelInfo" class="vendor-info">
+                        <h2>Rodrigo Rafael</h2>
+                        <p>Vendedor de brochetas de fresa</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Brochetas de fresa - $20</li>
+                            <li>Brochetas de uva - $18</li>
+                            <li>Brochetas de plátano - $15</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Adriana Vanessa -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/DonasVane.jpg" alt="Productos de Adriana Vanessa"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'VanessaInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Donas</p>
+                                    <p><strong>Precio:</strong> $12</p>
+                                    <p><strong>Promociones:</strong> 3x30</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Adriana Vanessa -->
+                    <div id="VanessaInfo" class="vendor-info">
+                        <h2>Adriana Vanessa</h2>
+                        <p>Vendedora de donas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Dona de chocolate - $12</li>
+                            <li>Dona de fresa - $12</li>
+                            <li>Dona glaseada - $12</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Lucía Castillo -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/LuciLunch.jpg" alt="Productos de Lucía Castillo"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'LucíaCastilloInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Lunch de medio kilo</p>
+                                    <p><strong>Precio:</strong> $50</p>
+                                    <p><strong>Promociones:</strong> Descuento por compras al mayoreo</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Lucía Castillo -->
+                    <div id="LucíaCastilloInfo" class="vendor-info">
+                        <h2>Lucía Castillo</h2>
+                        <p>Vendedora de lunch de medio kilo</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Lunch de pollo - $50</li>
+                            <li>Lunch de res - $55</li>
+                            <li>Lunch vegetariano - $45</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Elías Vázquez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/TortasElías.jpg" alt="Productos de Elías Vázquez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'ElíasVázquezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Tortas de milanesa</p>
+                                    <p><strong>Precio:</strong> $35</p>
+                                    <p><strong>Promociones:</strong> 2x60</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Elías Vázquez -->
+                    <div id="ElíasVázquezInfo" class="vendor-info">
+                        <h2>Elías Vázquez</h2>
+                        <p>Vendedor de tortas de milanesa</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Torta de milanesa de res - $35</li>
+                            <li>Torta de milanesa de pollo - $30</li>
+                            <li>Torta de milanesa vegetariana - $25</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Yashiro -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/GalletasYashiroYashiro.jpg" alt="Productos de Yashiro"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'YashiroInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Galletas</p>
+                                    <p><strong>Precio:</strong> $10</p>
+                                    <p><strong>Promociones:</strong> 5x45</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Yashiro -->
+                    <div id="YashiroInfo" class="vendor-info">
+                        <h2>Yashiro</h2>
+                        <p>Vendedor de galletas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Galletas de chocolate - $10</li>
+                            <li>Galletas de avena - $10</li>
+                            <li>Galletas de nuez - $10</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Ivonne Lopez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/ChicharroneraIvone.jpg" alt="Productos de Ivonne Lopez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'IvonnelopezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Chicharron preparado</p>
+                                    <p><strong>Precio:</strong> $30</p>
+                                    <p><strong>Promociones:</strong> 2x50</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Ivonne Lopez -->
+                    <div id="IvonnelopezInfo" class="vendor-info">
+                        <h2>Ivonne Lopez</h2>
+                        <p>Vendedora de tostadas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Tostadas de pollo - $15</li>
+                            <li>Tostadas de res - $15</li>
+                            <li>Tostadas vegetarianas - $12</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Iván -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/PanIvanRobles.jpg" alt="Productos de Iván"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'IvánInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Pan</p>
+                                    <p><strong>Precio:</strong> $5</p>
+                                    <p><strong>Promociones:</strong> 12x50</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Iván -->
+                    <div id="IvánInfo" class="vendor-info">
+                        <h2>Iván</h2>
+                        <p>Vendedor de pan</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Pan de mantequilla - $5</li>
+                            <li>Pan de chocolate - $6</li>
+                            <li>Pan integral - $5</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Braulio -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/pizzaBraulio.jpg" alt="Productos de Braulio"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'BraulioInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Pizza de pepperoni</p>
+                                    <p><strong>Precio:</strong> $150</p>
+                                    <p><strong>Promociones:</strong> 2x280</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Braulio -->
+                    <div id="BraulioInfo" class="vendor-info">
+                        <h2>Braulio</h2>
+                        <p>Vendedor de pizzas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Pizza de pepperoni - $150</li>
+                            <li>Pizza de queso - $140</li>
+                            <li>Pizza hawaiana - $160</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Rodrigo -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/Helados Rodrigo.jpg" alt="Paletas de Rodrigo"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'RodrigoInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Paletas</p>
+                                    <p><strong>Precio:</strong> $10</p>
+                                    <p><strong>Promociones:</strong> 12x100</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Rodrigo -->
+                    <div id="RodrigoInfo" class="vendor-info">
+                        <h2>Rodrigo</h2>
+                        <p>Vendedor de paletas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Paleta de limón - $10</li>
+                            <li>Paleta de fresa - $10</li>
+                            <li>Paleta de tamarindo - $10</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Ángel Axel -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/BoliAngel.jpg" alt="Productos de Ángel Axel"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'ÁngelAxelInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Bolis</p>
+                                    <p><strong>Precio:</strong> $5</p>
+                                    <p><strong>Promociones:</strong> 12x50</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Ángel Axel -->
+                    <div id="ÁngelAxelInfo" class="vendor-info">
+                        <h2>Ángel Axel</h2>
+                        <p>Vendedor de bolis</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Boli de yogur - $5</li>
+                            <li>Boli de fresa - $5</li>
+                            <li>Boli de chocolate - $5</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Erika Cardenas -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/pastesErika.jpg" alt="Productos de Erika Cardenas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'ErikaCardenasInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Duraznos deshidratados</p>
+                                    <p><strong>Precio:</strong> $20</p>
+                                    <p><strong>Promociones:</strong> 5x80</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Erika Cardenas -->
+                    <div id="ErikaCardenasInfo" class="vendor-info">
+                        <h2>Erika Cardenas</h2>
+                        <p>Vendedora de duraznos deshidratados</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Duraznos deshidratados - $20</li>
+                            <li>Manzanas deshidratadas - $18</li>
+                            <li>Plátanos deshidratados - $15</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Isaac Colunga -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/solchesitosIsaac.jpg" alt="Productos de Isaac Colunga"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'IsaacColungaInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Solchestitos</p>
+                                    <p><strong>Precio:</strong> $15</p>
+                                    <p><strong>Promociones:</strong> 10x130</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Isaac Colunga -->
+                    <div id="IsaacColungaInfo" class="vendor-info">
+                        <h2>Isaac Colunga</h2>
+                        <p>Vendedor de Solchestitos</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Solchestitos extremos - $15</li>
+                            <li>Solchestitos normales - $15</li>
+                            <li>Solchestitos de queso - $15</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Orlando Alcantara -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/DanoninoOrlando.jpg" alt="Productos de Orlando Alcantara"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'OrlandoAlcantaraInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Danoninos Congelados</p>
+                                    <p><strong>Precio:</strong> $10</p>
+                                    <p><strong>Promociones:</strong> 5x40</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Orlando Alcantara -->
+                    <div id="OrlandoAlcantaraInfo" class="vendor-info">
+                        <h2>Orlando Alcantara</h2>
+                        <p>Vendedor de gelatinas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Gelatina de fresa - $10</li>
+                            <li>Gelatina de limón - $10</li>
+                            <li>Gelatina de chocolate - $12</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Caxa Ortiz -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/ChickenBakeCaxa.jpg" alt="Productos de Caxa Ortiz"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'CaxaOrtizInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Chicken bake</p>
+                                    <p><strong>Precio:</strong> $25</p>
+                                    <p><strong>Promociones:</strong> 5x110</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Caxa Ortiz -->
+                    <div id="CaxaOrtizInfo" class="vendor-info">
+                        <h2>Caxa Ortiz</h2>
+                        <p>Vendedora de chicken bake</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Chicken bake clásico - $25</li>
+                            <li>Chicken bake BBQ - $28</li>
+                            <li>Chicken bake vegetariano - $22</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Fernando H -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/Birriamen Fernando.jpg" alt="Productos de Fernando H"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'FernandoHInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Birriamen</p>
+                                    <p><strong>Precio:</strong> $40</p>
+                                    <p><strong>Promociones:</strong> 3x110</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Fernando H -->
+                    <div id="FernandoHInfo" class="vendor-info">
+                        <h2>Fernando H</h2>
+                        <p>Vendedor de birriamen</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Birriamen clásico - $40</li>
+                            <li>Birriamen picante - $45</li>
+                            <li>Birriamen vegetariano - $38</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Raúl Martinez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/HamburguesasRaul.jpg" alt="Productos de Raúl Martinez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'RaúlMartinezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Hamburguesas</p>
+                                    <p><strong>Precio:</strong> $50</p>
+                                    <p><strong>Promociones:</strong> 3x140</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Raúl Martinez -->
+                    <div id="RaúlMartinezInfo" class="vendor-info">
+                        <h2>Raúl Martinez</h2>
+                        <p>Vendedor de hamburguesas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Hamburguesa clásica - $50</li>
+                            <li>Hamburguesa doble - $70</li>
+                            <li>Hamburguesa vegetariana - $45</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Jaqueline Frias -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/PlatanosJakelin.jpg" alt="Productos de Jaqueline Frias"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'PlatanosJakelinInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Platanos</p>
+                                    <p><strong>Precio:</strong> $30</p>
+                                    <p><strong>Promociones:</strong> 4x110</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Jaqueline Frias -->
+                    <div id="PlatanosJakelinInfo" class="vendor-info">
+                        <h2>Jaqueline Frias</h2>
+                        <p>Vendedora de crepas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Crepa de fresa - $30</li>
+                            <li>Crepa de plátano - $30</li>
+                            <li>Crepa de nutella - $35</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Christopher Salas -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/cuernosChristopher.jpg" alt="Productos de Christopher Salas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'ChristopherSalasInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Cuernito de jamón y queso</p>
+                                    <p><strong>Precio:</strong> $20</p>
+                                    <p><strong>Promociones:</strong> 3x50</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Christopher Salas -->
+                    <div id="ChristopherSalasInfo" class="vendor-info">
+                        <h2>Christopher Salas</h2>
+                        <p>Vendedor de Cuernitos</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Cuernito de jamón y queso - $20</li>
+                            <li>Cuernito de chocolate - $22</li>
+                            <li>Cuernito vegetariano - $18</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Aldo Cuevas -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/AldoCuevas.jpg" alt="Productos de Aldo Cuevas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCuevasInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Chilaquiles</p>
+                                    <p><strong>Precio:</strong> $35</p>
+                                    <p><strong>Promociones:</strong> 2x60</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Aldo Cuevas -->
+                    <div id="AldoCuevasInfo" class="vendor-info">
+                        <h2>Aldo Cuevas</h2>
+                        <p>Vendedor de chilaquiles</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Chilaquiles verdes - $35</li>
+                            <li>Chilaquiles rojos - $35</li>
+                            <li>Chilaquiles con pollo - $40</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Daniela Flores -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/CerealesDany.jpg" alt="Productos de Daniela Flores"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'DanielaFloresInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Cereal con leche</p>
+                                    <p><strong>Precio:</strong> $20</p>
+                                    <p><strong>Promociones:</strong> 3x50</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Daniela Flores -->
+                    <div id="DanielaFloresInfo" class="vendor-info">
+                        <h2>Daniela Flores</h2>
+                        <p>Vendedora de cereales</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Cereal con leche - $20</li>
+                            <li>Yogurt con frutas - $25</li>
+                            <li>Avena con frutas - $18</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Carlos Hernandez -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/TacosDonCarlos.jpg" alt="Productos de Carlos Hernandez"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'CarlosHernandezInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Tacos </p>
+                                    <p><strong>Precio:</strong> $45</p>
+                                    <p><strong>Promociones:</strong> 2x80</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Carlos Hernandez -->
+                    <div id="CarlosHernandezInfo" class="vendor-info">
+                        <h2>Carlos Hernandez</h2>
+                        <p>Vendedor de carnitas</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Carnitas de cerdo - $45</li>
+                            <li>Carnitas de res - $50</li>
+                            <li>Carnitas mixtas - $55</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Aldo Cuevas -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/spaguettiAldoC.jpg" alt="Productos de Aldo Cuevas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Spaghetti</p>
+                                    <p><strong>Precio:</strong> $40</p>
+                                    <p><strong>Promociones:</strong> 2x70</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Información del vendedor Aldo Cuevas -->
+                    <div id="AldoCInfo" class="vendor-info">
+                        <h2>Aldo Cuevas</h2>
+                        <p>Vendedor de spaghetti</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Spaghetti a la bolognesa - $40</li>
+                            <li>Spaghetti al pesto - $45</li>
+                            <li>Spaghetti carbonara - $50</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                    <!-- Tarjeta para Aldo Cuevas - Torta Ahogada -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/pambasosAldoC.jpg" alt="Torta Ahogada de Aldo Cuevas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                        <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Pambasos</p>
+                                    <p><strong>Precio:</strong> $50</p>
+                                    <p><strong>Promociones:</strong> 2x90</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta para Aldo Cuevas - Albondigas -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/TortasAldoC.jpg" alt="Albondigas de Aldo Cuevas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                        <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Albondigas</p>
+                                    <p><strong>Precio:</strong> $45</p>
+                                    <p><strong>Promociones:</strong> 2x80</p>
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta para Aldo Cuevas - Quesadilla -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/GorditasAldo.jpg" alt="Quesadilla de Aldo Cuevas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                        <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> gordita de harina</p>
+                                    <p><strong>Precio:</strong> $20</p>
+                                    <p><strong>Promociones:</strong> 3x50</p>
+                                    <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta para Aldo Cuevas - Tacos -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                        <div class="custom-product-card">
+                            <div class="custom-card-front">
+                                <img src="imagenes/HotdogsAldoC.jpg" alt="Tacos de Aldo Cuevas"
+                                    class="custom-card-img-top">
+                                <div class="custom-card-overlay">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                                        <button class="btn btn-secondary" type="button"
+                                        onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                                </div>
+                            </div>
+                            <div class="custom-card-back">
+                                <div class="custom-card-content">
+                                    <p id="customPhoneNumber">55 1234 5678</p>
+                                    <p><strong>Producto:</strong> Hotdogs</p>
+                                    <p><strong>Precio:</strong> $25</p>
+                                    <p><strong>Promociones:</strong> 3x60</p>
+                                    <button class="btn btn-primary" type="button"
+                                    onclick="copyCustomPhoneNumber()">Contactar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información del vendedor Aldo Cuevas -->
+                    <div id="AlsoCInfo" class="vendor-info">
+                        <h2>Aldo Cuevas</h2>
+                        <p>Vendedor de varios platillos</p>
+                        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+                        <p><strong>Productos:</strong></p>
+                        <ul>
+                            <li>Spaghetti a la bolognesa - $40</li>
+                            <li>Spaghetti al pesto - $45</li>
+                            <li>Spaghetti carbonara - $50</li>
+                            <li>Chilaquiles verdes - $35</li>
+                            <li>Chilaquiles rojos - $35</li>
+                            <li>Chilaquiles con pollo - $40</li>
+                            <li>Torta Ahogada - $50</li>
+                            <li>Albondigas - $45</li>
+                            <li>Quesadilla - $20</li>
+                            <li>Tacos - $25</li>
+                        </ul>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+                        </div>
+                        <p id="averageRating">Promedio de calificación: 0.0</p>
+                        <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        <button class="btn btn-secondary" onclick="closeVendorInfo()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+
+
+
+
+        <!-- /.container -->
+        <div id="vendorInfo" class="vendor-info">
+            <h2>Valeria</h2>
+            <p>Vendedora de aguas frescas</p>
+            <p><strong>Teléfono:</strong> 55 1234 5678</p>
+            <p><strong>Productos:</strong></p>
+            <ul>
+                <li>Café de litro - $25</li>
+                <li>Agua de horchata - $20</li>
+                <li>Agua de jamaica - $15</li>
+            </ul>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+            </div>
+            <p id="averageRating">Promedio de calificación: 4.0</p>
+            <button class="btn btn-primary" onclick="copyCustomPhoneNumber()">Contactar</button>
+        </div>
+
+        <!-- Modal -->
+        <div id="vendorModal" class="modal">
+            <div class="modal-content">
+                <button class="close" onclick="closeVendorModal()">&times;</button>
+                <div class="content-wrapper">
+                    <div class="image-container">
+                        <svg class="bd-placeholder-img rounded-circle" width="120" height="120" role="img"
+                            aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title></title>
+                            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                            <image id="vendorImage" width="120" height="120" clip-path="circle(50%)"></image>
+                        </svg>
+                        <div class="current-rating" id="currentRating"></div>
+                    </div>
+                    <h2 class="fw-normal" id="vendorName"></h2>
+                    <div>
+                        <p id="vendorInfo"></p>
+                        <p><strong>Productos principales:</strong></p>
+                        <div class="product-container" id="vendorProducts"></div>
+                    </div>
+                    <div class="star-rating" id="starRating">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5"
+                            title="5 stars">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4"
+                            title="4 stars">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3"
+                            title="3 stars">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2"
+                            title="2 stars">&#9733;</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1"
+                            title="1 star">&#9733;</label>
+                    </div>
+                    <div>
+                        <p id="ratingResult">Valoración: 0 estrellas</p>
+                        <p id="averageRating">Calificación: 4.0</p>
+                    </div>
+                    <button class="contact-button">Contactar</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <footer class="container">
+            <p class="float-end"><a href="index.html">Regresar al Inicio.</a> <br> <a
+                    href="https://github.com/karadelacra/ProyectoF/tree/main/Intento2">Comentarios o sugerencias</a>
+            </p>
+            <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+                <p class="mb-1">© 2024 FoodMatch</p>
+            </footer>
+        </footer>
+    </main>
+
+</body>
+
+<!-- Scripts -->
+<script src="./Carousel Template · Bootstrap v5.3_files/bootstrap.bundle.min.js.descarga"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+<script src="js/scripts.js"></script>
+
+<script src="path/to/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('addComponentBtn').addEventListener('click', function () {
+            var newProductDiv = document.createElement('div');
+            newProductDiv.classList.add('col');
+            newProductDiv.innerHTML = `
+                    <div class="card shadow-sm">
+                        <img src="path/to/image.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+                        <div class="card-body">
+                            <p class="card-text">New Product Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary edit-btn">Edit</button>
+                                </div>
+                                <small class="text-body-secondary">Just now</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            document.getElementById('productMatrix').appendChild(newProductDiv);
+
+            // Agregar el evento al nuevo botón "Edit"
+            newProductDiv.querySelector('.edit-btn').addEventListener('click', function () {
+                alert('Edit button clicked');
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+<script>
+    function showVendorInfo(event, vendorId) {
+        event.stopPropagation();
+        closeAllVendorInfos();
+        var vendorInfo = document.getElementById(vendorId);
+        vendorInfo.style.display = 'block';
+    }
+
+    function toggleCustomCard(event, button) {
+        event.stopPropagation();
+        const card = button.closest('.custom-product-card');
+        card.classList.toggle('flipped');
+    }
+
+    function closeVendorInfo() {
+        var vendorInfos = document.querySelectorAll('.vendor-info');
+        vendorInfos.forEach(function (info) {
+            info.style.display = 'none';
+        });
+    }
+
+    function closeAllVendorInfos() {
+        var vendorInfos = document.querySelectorAll('.vendor-info');
+        vendorInfos.forEach(function (info) {
+            info.style.display = 'none';
+        });
+    }
+
+    function copyCustomPhoneNumber() {
+        const phoneNumber = document.getElementById("customPhoneNumber").textContent;
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+            alert("Número de teléfono copiado: " + phoneNumber);
+        }).catch(err => {
+            console.error("Error al copiar el número de teléfono: ", err);
+        });
+    }
+
+    document.addEventListener('click', function(event) {
+        closeAllVendorInfos();
+        const cards = document.querySelectorAll('.custom-product-card.flipped');
+        cards.forEach(card => {
+            if (!card.contains(event.target)) {
+                card.classList.remove('flipped');
+            }
+        });
+    });
+
+    function calculateAverageRating() {
+        document.querySelectorAll('.vendor-info').forEach(vendorInfo => {
+            const ratings = vendorInfo.querySelectorAll('.star-rating input');
+            let total = 0;
+            let count = 0;
+
+            ratings.forEach(rating => {
+                if (rating.checked) {
+                    total += parseInt(rating.value);
+                    count++;
+                }
+            });
+
+            const average = total / count || 0;
+            vendorInfo.querySelector('.averageRating').innerText = `Promedio de calificación: ${average.toFixed(1)}`;
+        });
+    }
+
+    document.querySelectorAll('.star-rating input').forEach(input => {
+        input.addEventListener('change', calculateAverageRating);
+    });
+</script>
+
+<!-- segundo script -->
+
+<script>
+    function addNewProduct() {
+        const newProductHTML = `
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                <div class="custom-product-card">
+                    <div class="custom-card-front">
+                        <input type="file" accept="image/*" onchange="loadImage(event, this)">
+                        <img src="imagenes/HotdogsAldoC.jpg" alt="Nuevo Producto" class="custom-card-img-top">
+                        <div class="custom-card-overlay">
+                            <button class="btn btn-primary" type="button" onclick="toggleCustomCard(event, this)">Ver detalles</button>
+                            <button class="btn btn-secondary" type="button" onclick="showVendorInfo(event, 'AldoCInfo')">Ver vendedor</button>
+                        </div>
+                    </div>
+                    <div class="custom-card-back">
+                        <div class="custom-card-content">
+                            <input type="text" class="form-control mb-2" placeholder="Número de teléfono" id="customPhoneNumber">
+                            <input type="text" class="form-control mb-2" placeholder="Producto" id="customProduct">
+                            <input type="text" class="form-control mb-2" placeholder="Precio" id="customPrice">
+                            <input type="text" class="form-control mb-2" placeholder="Promociones" id="customPromotions">
+                            <button class="btn btn-primary" type="button" onclick="copyCustomPhoneNumber()">Contactar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        const productContainer = document.getElementById('product-container');
+        productContainer.insertAdjacentHTML('beforeend', newProductHTML);
+    }
+
+    function toggleCustomCard(event, button) {
+        const card = button.closest('.custom-product-card');
+        card.classList.toggle('flipped');
+    }
+
+    function showVendorInfo(event, vendorInfoId) {
+        document.getElementById(vendorInfoId).classList.add('show');
+    }
+
+    function copyCustomPhoneNumber() {
+        const phoneNumber = document.getElementById('customPhoneNumber').value;
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+            alert('Número de teléfono copiado: ' + phoneNumber);
+        }, (err) => {
+            console.error('No se pudo copiar el número: ', err);
+        });
+    }
+
+    function closeVendorInfo() {
+        document.getElementById('AldoCInfo').classList.remove('show');
+    }
+
+    function loadImage(event, input) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            const imgElement = input.nextElementSibling;
+            imgElement.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+</html>
