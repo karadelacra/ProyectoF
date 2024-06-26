@@ -14,14 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, {
         name: "Edgar Café",
         info: "Información:",
-        image: "imagenes/Caféyaguas.jpg",
+        image: "imagenes/andrés-caféyaguas.jpg",
         products: [
             { nombre: "Cafés de litro", img: "imagenes/Caféyaguas.jpg", price: "$25", promo: "Entregamos en cualquier parte de la escuela" }
         ],
         rating: { sum: 12.9, count: 3 }
     }, {
-        name: "Vendedor 3",
-        info: "Información detallada del Vendedor 3.",
+        name: "Programador Pizzas",
+        info: "Información del Programador:",
         image: "imagenes/programer.jpg",
         products: [
             { nombre: "pizza de 3 quesos", img: "imagenes/pizzaprogrammer.jpg", price: "$27", promo: "20% de descuento" },

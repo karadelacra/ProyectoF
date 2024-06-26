@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodMatch</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#productos-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vendedor {
+    background-color: #1a1a1a;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.vendedor h2 {
+    margin-top: 0;
+}
+
+.producto {
+    margin-top: 20px;
+}
+
+.producto img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.detalles {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.detalles p {
+    margin: 5px 0;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <div id="productos-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    fetch('get_productos.php')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('productos-container').innerHTML = data;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+
+    </script>
+</body>
+</html>
