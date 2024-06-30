@@ -238,7 +238,7 @@
                 <a class="navbar-brand" href="index.html">
                     <img src="imagenes/logotipo_ipn.png" alt="FoodMatch" style="width: 100px;">
                 </a>
-
+djfgfghf
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -249,10 +249,7 @@
                             <a class="nav-link active" aria-current="page" href="index.html">Casa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Signin.html">Iniciar sesión</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#Vendedores">Vendedores</a>
+                            <a class="nav-link" href="#Vendedores">Agregar producto</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
@@ -2215,7 +2212,7 @@
                             <input type="text" class="form-control mb-2" placeholder="Producto" id="customProduct">
                             <input type="text" class="form-control mb-2" placeholder="Precio" id="customPrice">
                             <input type="text" class="form-control mb-2" placeholder="Promociones" id="customPromotions">
-                            <button class="btn btn-primary" type="button" onclick="copyCustomPhoneNumber()">Contactar</button>
+                            <button class="btn btn-primary" type="button" onclick="uploadProduct(this)">Subir</button>
                         </div>
                     </div>
                 </div>
@@ -2254,6 +2251,35 @@
             imgElement.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function uploadProduct(button) {
+        const card = button.closest('.custom-product-card');
+        const phoneNumber = card.querySelector('#customPhoneNumber').value;
+        const product = card.querySelector('#customProduct').value;
+        const price = card.querySelector('#customPrice').value;
+        const promotions = card.querySelector('#customPromotions').value;
+        const image = card.querySelector('img').src;
+
+        const formData = new FormData();
+        formData.append('phoneNumber', phoneNumber);
+        formData.append('product', product);
+        formData.append('price', price);
+        formData.append('promotions', promotions);
+        formData.append('image', image);
+
+        fetch('registro.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert('Producto subido correctamente');
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error al subir el producto:', error);
+        });
     }
 </script>
 
